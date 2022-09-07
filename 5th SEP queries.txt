@@ -2,16 +2,13 @@
 
 select count(*) from employees where hire_date like '%DEC%' and hire_date like '%02';
 
-
 2.WAQ to display employee information with maximum salary.
  
 select * from employees where salary=(select max(salary) from employees);
 
-
 3.WAQ to display second highest salary.
 
 select max(salary) from employees where salary<(select max(salary) from employees);
-
 
 4. WAQ to display second highest salary department wise.
 
@@ -25,7 +22,6 @@ where e.department_id=b.department_id) group by department_id order by 1;
 
 select e.first_name as employee_name,b.city as city 
 from employees e inner join emp_details_view b on e.employee_id=b.employee_id;
-
 
 2.WAQ to display employee who joined in the same month as Charles?
 
