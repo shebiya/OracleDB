@@ -1,0 +1,34 @@
+1.WAQ to display number of people joined in December 2002.
+
+select count(*) from employees where hire_date like '%DEC%' and hire_date like '%02';
+
+
+2.WAQ to display employee information with maximum salary.
+ 
+select * from employees where salary=(select max(salary) from employees);
+
+
+3.WAQ to display second highest salary.
+
+select max(salary) from employees where salary<(select max(salary) from employees);
+
+
+4. WAQ to display second highest salary department wise.
+
+select department_id,max(salary) from employees e where e.salary < (select max(salary) from employees b 
+where e.department_id=b.department_id) group by department_id order by 1;
+
+
+
+
+1. WAQ to display employees name with the City they working into.
+
+select e.first_name as employee_name,b.city as city 
+from employees e inner join emp_details_view b on e.employee_id=b.employee_id;
+
+
+2.WAQ to display employee who joined in the same month as Charles?
+
+select first_name,to_char(hire-date,'MON') from employees where to_char(hire_date,'MON') like(select to_char(hire_date,'MON')
+from employees where first_name like 'Charles');
+

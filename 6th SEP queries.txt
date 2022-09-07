@@ -1,0 +1,20 @@
+1.WAQ to display all the employees located in New Jersey? 
+
+select * from employees e inner join emp_details_view ev on e.employee_id=ev.employee_id where ev.state_province='Texas';
+
+
+2.WAQ to display number of employees joined month wise?
+
+select count(*) as no_of_employees,to_char(hire_date,'MON') as month from employees group by to_char(hire_date,'MON') order by to_char(hire_date,'MON');
+
+
+3.WAQ to display highest salary person information? 
+
+select * from employees where salary=(select max(salary) from employees);
+
+
+4.WAQ to display highest salary person information department wise? 
+
+ select employee_id,first_name,department_id,salary from employees where(department_id,salary) in ( select department_id,max(salary) from employees group by department_id);
+
+
