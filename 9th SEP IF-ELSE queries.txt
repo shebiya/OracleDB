@@ -1,0 +1,34 @@
+1. Write a PL/SQL block for performing calculations.
+
+DECLARE
+a integer := 30;
+b integer := 50;
+c real;
+BEGIN
+c := a + b;
+dbms_output.put_line('Addition:'||c);
+c := a - b;
+dbms_output.put_line('Subtraction:'||c);
+c := a * b;
+dbms_output.put_line('Multiplication:'||c);
+c := a / b;
+dbms_output.put_line('Division:'||c);
+END;
+
+
+2. Write a pl/sql block for calculating students grade.
+
+DECLARE
+m number:= 95;
+BEGIN
+IF(m >= 90 and m <= 100) THEN
+dbms_output.put_line('Grade A');
+ELSIF(m >=80 and m < 90) THEN 
+dbms_output.put_line('Grade B');
+ELSIF(m >= 70 and m < 80) THEN 
+dbms_output.put_line('Grade C');
+ELSE
+dbms_output.put_line('Failure');
+END IF;
+END;
+
