@@ -1,0 +1,7 @@
+1.WAQ to display top salaried employees location wise city.
+
+select city,salary from emp_details_view where (city,salary) in (select city,max(salary) from emp_details_view group by city);
+
+2.WAQ to display employees information based on bonus department wise.
+
+select department_id,salary+nvl(commission_pct,0) bonus  from employees a where department_id IN (select department_id from employees b where a.department_id=b.department_id);
