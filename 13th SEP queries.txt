@@ -1,0 +1,38 @@
+1) Write a procedure for calculating bonus of employee no 205.
+
+CREATE OR REPLACE PROCEDURE BonusCalculation(empno IN integer)
+IS
+bonus real;
+BEGIN
+select salary+nvl(commission_pct,0) into bonus from employees where employee_id=empno;
+dbms_output.put_line('Bonus of the Employee:'||bonus);
+END BonusCalculation;
+
+BEGIN
+BonusCalculation(145);
+END;
+
+
+2) Write a procedure for giving bonus to employees based on below rules-if job_id is IT_PROG then salary will be increased by 1000 and if job_id is SA_REP then salary will be increased by 700.
+
+CREATE OR REPLACE PROCEDURE Bonus_based_on_JobID(emp_ID IN integer)
+IS
+jobID employees.job_id%TYPE;
+bonus integer;
+BEGIN
+select job_id into jobID from employees where employee_id=emp_ID;
+IF(jobID like 'IT_PROG') THEN
+select salary+1000 into bonus from employees where employee_id=emp_ID;
+dbms_output.put_line('Bonus:'||bonus);
+ELSIF (jobID like 'SA_REP') THEN
+select salary+700 into bonus from employees where employee_id=emp_ID;
+dbms_output.put_line('Bonus:'||bonus);
+ELSE
+dbms_output.put_line('No Bonus');
+END IF;
+END Bonus_based_on_JobID;
+
+
+BEGIN
+Bonus_based_on_JobID(150);
+END;
