@@ -1,0 +1,32 @@
+1) Write a cursor for giving bonus to employees based on below rules-if job_id is IT_PROG then salary will be increased by 1000 and if job_id is SA_REP then salary will be increased by 700.
+
+DECLARE
+jobID emp.job_id%TYPE :=&jobID;
+erecord emp%ROWTYPE;
+
+CURSOR emp_bonus IS
+select * from emp where job_id=jobID;
+BEGIN
+OPEN emp_bonus;
+ LOOP
+  FETCH emp_bonus into erecord;
+  EXIT WHEN emp_bonus%NOTFOUND;
+  IF ( erecord.job_id LIKE 'IT_PROG') THEN
+   dbms_output.put_line('Job ID:'|| erecord.job_id);
+   dbms_output.put_line('Employee ID:'|| erecord.employee_id);
+   dbms_output.put_line('Salary:'|| erecord.salary);
+   dbms_output.put_line('Bonus:'||(erecord.salary+1000));
+  ELSIF (erecord.job_id LIKE 'SA_REP') THEN
+    dbms_output.put_line('Job ID:'|| erecord.job_id);
+    dbms_output.put_line('Employee ID:'|| erecord.employee_id);
+    dbms_output.put_line('Salary:'|| erecord.salary);
+    dbms_output.put_line('Bonus:'||(erecord.salary+700));
+    dbms_output.put_line(SQL%ROWCOUNT);
+  ELSE
+    dbms_output.put_line('No Bonus');
+  END IF;
+  
+ END LOOP;
+ 
+ CLOSE emp_bonus;
+ END;
