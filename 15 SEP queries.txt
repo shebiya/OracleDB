@@ -1,0 +1,26 @@
+1) To display employee names along with their managers using procedure.
+
+create or replace procedure emp_manager(jobID IN VARCHAR2)
+IS
+c_id emp.employee_id%TYPE;
+c_name emp.first_name%TYPE;
+c_count integer;
+c_job_id emp.job_id%TYPE;
+cursor emp_mgr is
+select sup.employee_id,sup.first_name,sup.job_id,count(sub.employee_id) as number_of_employees from emp sub join emp sup on
+sub.manager_id=sup.employee_id group by sup.employee_id,sup.first_name,sup.job_id;
+begin
+open emp_mgr;
+loop
+fetch emp_mgr into c_id,c_name,c_job_id,c_count;
+exit when emp_mgr%NOTFOUND;
+if(c_job_id like jobID) THEN
+dbms_output.put_line(c_id||' '||c_name||' '||c_count||' '||c_job_id);
+end if;
+end loop;
+close emp_mgr;
+end emp_manager;
+
+begin
+emp_manager('ST_MAN');
+end;
