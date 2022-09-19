@@ -1,0 +1,13 @@
+1) Create a trigger which stores information of the user and timestamp of the operation updating salary in emp table,log this into separate table emp_log table.
+
+create table emp_log(employee_id number,first_name varchar(20),last_name varchar(20),old_salary number,new_salary number,username varchar2(20),updated_time timestamp);
+
+CREATE OR REPLACE TRIGGER update_sal_trigger
+AFTER UPDATE OF salary on emp
+FOR EACH ROW
+BEGIN
+insert into emp_log values(:old.employee_id,:old.first_name,:old.last_name,:old.salary,:new.salary,user,systimestamp);
+END;
+
+select * from emp_log;
+update emp set salary=8300 where employee_id=107;

@@ -1,0 +1,26 @@
+1) Write a trigger to ensure that no employee of salary less than 1000 can be inserted in the database.
+
+CREATE OR REPLACE TRIGGER emp_trigger
+BEFORE INSERT on emp
+FOR EACH ROW
+BEGIN
+IF (:NEW.salary < 1000) THEN
+RAISE_APPLICATION_ERROR(-20000,'ERROR:Salary must be above 1000');
+END IF;
+END;
+
+
+2) Create a trigger which will work before deletion in employee table and create a duplicate copy of the record in another table employee_backup.
+
+create table emp_1 (employee_id number(6),first_name varchar2(20),last_name varchar2(20),email varchar2(25) NOT NULL,phone_number varchar2(20),hire_date DATE NOT NULL,job_id varchar2(10),salary number(8,2),commission_pct number(2,2),manager_id number(6),department_id number(4));
+
+create or replace trigger emp_backup
+before delete on emp
+for each row
+BEGIN
+insert into emp_1 values(:old.employee_id,:old.first_name,:old.last_name,:old.email,:old.phone_number,:old.hire_date,:old.job_id,:old.salary,:old.commission_pct,:old.manager_id,:old.department_id);
+END;
+
+delete from emp where employee_id=207;
+
+select * from emp_1;
